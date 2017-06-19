@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
+
+import Render from './render';
 
 const styles = {
   container: {
@@ -18,16 +20,21 @@ const styles = {
   label: {
     fontSize: 20,
     fontWeight: "300",
-  }
+  },
+  doneButton: {
+    borderRadius: 5,
+    backgroundColor: '#EAEAEA',
+    padding: 5,
+  },
 };
 
 class TaskRow extends Component {
+  onDonePressed() {
+    this.props.onDone(this.props.todo);
+  }
+
   render() {
-    return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{this.props.todo.task}</Text>
-    </View>
-    )
+    return Render.bind(this)(styles);
   }
 }
 
@@ -35,6 +42,7 @@ TaskRow.PropTypes = {
   todo: PropTypes.shape({
     task: PropTypes.string.isRequired,
   }).isRequired,
+  onDone: PropTypes.func.isRequired,
 };
 
 export default TaskRow;

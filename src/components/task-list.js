@@ -51,7 +51,10 @@ class TaskList extends Component {
 
   renderRow(todo) {
     return (
-      <TaskRow todo={todo} />
+      <TaskRow
+        onDone={this.props.onDone}
+        todo={todo}
+      />
     )
   }
 
@@ -81,5 +84,6 @@ class TaskList extends Component {
 TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddStarted: PropTypes.func.isRequired,
+  onDone: PropTypes.func.isRequired,
 };
 export default TaskList;
