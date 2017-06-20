@@ -11,7 +11,8 @@
     "react-native": "0.45.1",
     "react-native-deprecated-custom-components": "^0.1.0",
     "react-native-navigation": "next",
-    "react-native-swipeout": "git+https://github.com/hendrikswan/react-native-swipeout.git"
+    "react-native-swipeout": "git+https://github.com/hendrikswan/react-native-swipeout.git",
+    "redux": "^3.7.0"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

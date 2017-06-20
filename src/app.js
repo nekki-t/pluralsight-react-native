@@ -8,22 +8,18 @@ import {
 
 import TaskList from './components/task-list';
 import TaskForm from './components/task-form';
+import store from './todoStore';
 
 export default class App extends Component {
 
   constructor(props, context) {
     super(props, context);
 
-    this.state = {
-      todos: [
-        {
-          task: 'Learn React Native',
-        },
-        {
-          task: 'Learn React Native',
-        },
-      ]
-    };
+    this.state = store.getState();
+    store.subscribe(() => {
+      this.setState(store.getState());
+    });
+
     this.onAddStarted = this.onAddStarted.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onAdd = this.onAdd.bind(this);
@@ -51,11 +47,9 @@ export default class App extends Component {
 
   onAdd(task) {
     console.log('a task was added: ', task);
-    this.state.todos.push({
-      task: task,
-    });
-    this.setState({
-      todos: this.state.todos
+    store.dispatch({
+      type: 'ADD_TODO',
+      task,
     });
     this.nav.pop();
   }
