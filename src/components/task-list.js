@@ -5,6 +5,7 @@ import {
   ListView,
   TouchableHighlight,
   Text,
+  Switch,
 } from 'react-native';
 
 import TaskRow from './task-row';
@@ -29,7 +30,17 @@ const styles = {
     color: '#FAFAFA',
     fontSize: 20,
     fontWeight: '600',
-  }
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    padding: 10,
+  },
+  toggleText: {
+    fontSize: 20,
+    paddingLeft: 10,
+    paddingTop: 3,
+  },
+
 };
 
 class TaskList extends Component {
@@ -61,6 +72,20 @@ class TaskList extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View
+          style={styles.toggleRow}
+        >
+          <Switch
+            style={styles.switch}
+            value={this.props.filter !== 'pending'}
+            onValueChange={this.props.onToggle}
+          />
+          <Text
+            style={styles.toggleText}
+          >
+            Showing {this.props.todos.length} {this.props.filter} todo(s)
+          </Text>
+        </View>
         < ListView
           key={this.props.todos}
           dataSource={this.state.dataSource}
@@ -82,7 +107,9 @@ class TaskList extends Component {
 }
 
 TaskList.propTypes = {
+  filter: PropTypes.string.isRequired,
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onToggle: PropTypes.func.isRequired,
   onAddStarted: PropTypes.func.isRequired,
   onDone: PropTypes.func.isRequired,
 };

@@ -24,6 +24,7 @@ export default class App extends Component {
     this.onCancel = this.onCancel.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onDone = this.onDone.bind(this);
+    this.onToggle = this.onToggle.bind(this);
   }
 
   onAddStarted() {
@@ -34,10 +35,10 @@ export default class App extends Component {
 
   onDone(todo) {
     console.log('task was completed: ', todo.task);
-    const filteredTodos = this.state.todos.filter((filterTodo) => {
-      return filterTodo != todo;
+    store.dispatch({
+      type: 'DONE_TODO',
+      todo,
     });
-    this.setState({todos: filteredTodos});
   }
 
   onCancel() {
@@ -52,6 +53,12 @@ export default class App extends Component {
       task,
     });
     this.nav.pop();
+  }
+
+  onToggle () {
+    store.dispatch({
+      type: 'TOGGLE_STATE',
+    });
   }
 
   configureScene() {
@@ -70,9 +77,11 @@ export default class App extends Component {
       default:
         return (
           <TaskList
+            filter={this.state.filter}
             onAddStarted={this.onAddStarted}
             onDone={this.onDone}
             todos={this.state.todos}
+            onToggle={this.onToggle}
           />
         )
     }
