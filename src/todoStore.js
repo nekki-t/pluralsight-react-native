@@ -16,7 +16,7 @@ const defaultState = {
 function todoStore(state = defaultState, action) {
   switch(action.type) {
     case 'ADD_TODO':
-      const allTodos = state.todos.concat([{
+      const allTodos = state.allTodos.concat([{
         task: action.task,
         state: 'pending',
       }]);
@@ -25,8 +25,15 @@ function todoStore(state = defaultState, action) {
         todos: allTodos.filter(todo => todo.state === state.filter),
       });
     case 'DONE_TODO':
+      const doneTodo = Object.assign({}, action.todo, {
+        state: 'done',
+      });
+      const updateAllTodos = state.allTodos.map((todo) => {
+        return todo === action.todo ? doneTodo : todo;
+      });
       return Object.assign({}, state, {
-        todos: state.todos.filter(todo => todo != action.todo),
+        allTodos: updateAllTodos,
+        todos: updateAllTodos.filter(todo => todo.state === state.filter),
       });
     case 'TOGGLE_STATE':
       const filter = state.filter === 'pending' ? 'done' : 'pending';
